@@ -1,10 +1,10 @@
-var canvas = Canvas(400,220,"gameScreen");
-var guy = Rectangle(100,45,10,10,0,"#ff0000");
-var guy4 = Circle(100,-10,6,"#00e0b0");
-var guy2 = Circle(150,60,6,"#0000ff");
-var guy3 = Image(5,-50,100,100,0,"https://calsch.repl.co/src/logo.png");
-var camera = Camera(5,-50);
-var game = Game(canvas, 60);
+let canvas = Canvas(400, 220, 'gameScreen')
+let guy = Rectangle(100,45,10,10,0,"#ff0000");
+let guy4 = Circle(100,-10,6,"#00e0b0");
+let guy2 = Circle(150,60,6,"#0000ff");
+let guy3 = Image(5,-50,100,100,0,"https://calsch.repl.co/src/logo.png");
+let camera = Camera(5,-50);
+let game = Game(canvas, 60);
 
 guy.addScript(Script(function() {
 	guy.y=Math.sin(game.frame/30)*40;
@@ -34,7 +34,7 @@ game.addSprite(guy);
 game.addSprite(guy3);
 game.addSprite(guy2);
 game.addSprite(guy4);
-game.activateCamera(camera);
+game.setCamera(camera);
 game.bgColor = "#e0e0ff";
 
 game.start();

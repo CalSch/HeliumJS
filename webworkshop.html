@@ -44,13 +44,13 @@
 					parent.removeChild(parent.firstChild);
 				}
 			}
-			var assets = {};
-			var assetsList = document.getElementById("assets-list");
-			var games = 0;
-			var canvases = 0;
+			let assets = {};
+			let assetsList = document.getElementById("assets-list");
+			let games = 0;
+			let canvases = 0;
 
 			function makeGame() {
-				name = "Game";
+				let name = "Game";
 				if (games !== 0) {
 					name += games;
 				}
@@ -60,7 +60,7 @@
 				renderAssetsList();
 			}
 			function makeCanvas() {
-				name = "Canvas";
+				let name = "Canvas";
 				if (canvases !== 0) {
 					name += canvases;
 				}
@@ -71,7 +71,7 @@
 			}
 			function renderAssetsList() {
 				removeAllChildNodes(assetsList)
-				for (asset of Object.keys(assets)) {
+				for (let asset of Object.keys(assets)) {
 					let assetElm = document.createElement("a");
 					assetElm.innerText = asset;
 					assetElm.href = "#";
