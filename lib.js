@@ -14,43 +14,65 @@ function Canvas(width, height, id) {
 	return self;
 }
 
-function Rectangle(x,y,w,h,color) {
+function Rectangle(x,y,w,h,rot=0,color) {
 	let self = {
 		x,
 		y,
 		color,
 		update: function() {
-			
+			self.scripts.forEach(function(script) {
+				script.func();
+			});
+			return self;
 		},
 		draw: function(pos,ctx) {
+			//ctx.rotate(rot*Math.PI/180);
 			ctx.fillStyle = color;
 			ctx.fillRect(pos.x,pos.y,w,h);
-		}
+			//ctx.rotate(-rot*Math.PI/180);
+			return self;
+		},
+		addScript: function(script) {
+			self.scripts.push(script);
+			return self;
+		},
+		scripts: []
 	};
 
 	return self;
 }
 function Circle(x,y,r,color) {
-	let self = {
+	let self;
+
+	self = {
 		x,
 		y,
 		r,
 		color,
 		update: function() {
-			
+			self.scripts.forEach(function(script) {
+				script.func();
+			});
+			return self;
 		},
 		draw: function(pos,ctx) {
 			ctx.fillStyle = color;
 			ctx.beginPath();
 			ctx.arc(pos.x, pos.y, r, 0, 2 * Math.PI);
 			ctx.fill();
-		}
+			return self;
+		},
+		addScript: function(script) {
+			self.scripts.push(script);
+			return self;
+		},
+		scripts: []
 	};
 
 	return self;
 }
 
-function Image(x,y,w,h,src) {
+function Image(x,y,w,h,rot=0,src) {
 	let elm = document.createElement("img");
 	elm.src = src;
 	let self = {
@@ -59,10 +81,23 @@ function Image(x,y,w,h,src) {
 		src,
 		elm,
 
-		update: function() {},
+		update: function() {
+			self.scripts.forEach(function(script) {
+				script.func();
+			});
+			return self;
+		},
 		draw: function(pos,ctx) {
+			//ctx.rotate(rot*Math.PI/180);
 			ctx.drawImage(elm, pos.x,pos.y,w,h);
-		}
+			//ctx.rotate(-rot*Math.PI/180);
+			return self;
+		},
+		addScript: function(script) {
+			self.scripts.push(script);
+			return self;
+		},
+		scripts: []
 	};
 
 	return self;
@@ -77,7 +112,15 @@ function Camera(x,y) {
 	return self;
 }
 
-function Game(canvas, frameRate) {
+function Script(func) {
+	self = {
+		func
+	};
+
+	return self;
+}
+
+function Game(canvas, frameRate = 60) {
 	let self, ctx;
 
 	function draw() {
@@ -90,11 +133,13 @@ function Game(canvas, frameRate) {
 			};
 			sprite.draw(pos,ctx);
 		});
+		return self;
 	}
 	function update() {
 		self.sprites.forEach(function(spr) {
 			spr.update();
 		});
+		return self;
 	}
 	function loop() {
 		if (!self.running) return;
@@ -103,15 +148,44 @@ function Game(canvas, frameRate) {
 		self.lastFrameTime=+new Date();
 		self.update();
 		self.draw();
+		return self;
 	}
 	function start() {
 		self.running = true;
-		ctx = self.canvas.ctx
 		self.gameInterval = setInterval(self.loop, 1000/self.frameRate);
+		ctx=self.canvas.ctx;
+		return self;
+	}
+	function stop() {
+		self.running = false;
+		clearInterval(self.gameInterval);
+		return self;
+	}
+	function getMousePosition(event) { 
+		let rect = canvas.element.getBoundingClientRect(); 
+		let x = event.clientX - rect.left; 
+		let y = event.clientY - rect.top; 
+		
+		return {x, y};
 	}
 
-	window.onkeyup = function(e) { self.pressedKeys[e.key] = false; }
-	window.onkeydown = function(e) { self.pressedKeys[e.key] = true; }
+	//window.onkeyup = function(e) { self.pressedKeys[e.key] = false; }
+	//window.onkeydown = function(e) { self.pressedKeys[e.key] = true; }
+	window.addEventListener('keyup', function(e) {
+		self.pressedKeys[e.key] = false;
+	}, true);
+	window.addEventListener('keydown', function(e) {
+		self.pressedKeys[e.key] = true;
+	}, true);
+	canvas.element.addEventListener('mousemove', function(e) {
+		self.mousePos = getMousePosition(e);
+	});
+	canvas.element.addEventListener('mousedown', function(e) {
+		self.mouseDown = true;
+	});
+	canvas.element.addEventListener('mouseup', function(e) {
+		self.mouseDown = false;
+	});
 
 	self = {
 		canvas,
@@ -123,19 +197,21 @@ function Game(canvas, frameRate) {
 		running: false,
 		deltaTime: 0,
 		sprites: [],
-		cameras: [],
 		pressedKeys: {},
 		activeCamera: null,
+		mousePos: {x: 0, y: 0},
+		mouseDown: false,
 
 		addSprite: function(spr) {
 			self.sprites.push(spr);
+			return self;
 		},
-		addCamera: function(cam, active = false) {
-			self.cameras.push(cam);
-			if (active) self.activeCamera = cam;
+		setCamera: function(cam) {
+			self.activeCamera = cam;
+			return self;
 		},
-		activateCamera: function(num) {
-			if (active) self.activeCamera = self.cameras[num];
+		toWorldSpace: function(pos) {
+			return {x: pos.x + camera.x, y: pos.y + camera.y};
 		},
 		start,
 		draw,
