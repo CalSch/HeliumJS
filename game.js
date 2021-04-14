@@ -1,8 +1,8 @@
 let canvas = helium.Canvas(400, 220, 'gameScreen')
-let guy = helium.Rectangle(100,45,10,10,0,"#ff0000");
+let guy = helium.Rectangle(100,45,10,10,"#ff0000");
 let guy4 = helium.Circle(100,-10,6,"#00e0b0");
 let guy2 = helium.Circle(150,60,6,"#0000ff");
-let guy3 = helium.Image(5,-50,100,100,0,"https://calsch.repl.co/src/logo.png");
+let guy3 = helium.Image(5,-50,100,100,"https://calsch.repl.co/src/logo.png");
 let camera = helium.Camera(5,-50);
 let game = helium.Game(canvas, 60);
 
