@@ -3,7 +3,7 @@ let camera = helium.Camera(-5,-5);
 let game = helium.Game(canvas, 60);
 
 let rect1=helium.Rectangle(30,30,40,40,"red");
-let circ1=helium.Circle(120,30,20,"blue");
+let circ1=helium.Circle(100,30,20,"blue");
 let point=helium.Circle(0,0,4,"black");
 let dist=helium.Text(5,200,"NaN","red");
 
@@ -12,21 +12,21 @@ point.addScript(helium.Script(function (self) {
 	self.y=game.toWorldSpace(game.mousePos).y-4;
 }));
 rect1.addScript(helium.Script(function (self) {
-	if ( helium.collision.IsPointInRect(game.toWorldSpace(game.mousePos), {x:30,y:30,w:40,h:40}) ) {
+	if ( helium.collision.IsPointInRect(point, rect1) ) {
 		self.color="#00ff00";
 	} else {
 		self.color="red";
 	}
 }));
 circ1.addScript(helium.Script(function (self) {
-	if ( helium.collision.IsPointInCirc(game.toWorldSpace(game.mousePos), circ1) ) {
+	if ( helium.collision.IsPointInCirc(point,circ1) ) {
 		self.color="#00ff00";
 	} else {
 		self.color="blue";
 	}
 }));
 dist.addScript(helium.Script(function (self) {
-	self.text=helium.util.getDistance(point,circ1)*5+"   "+circ1.r;
+	self.text=0
 }));
 
 game.addSprite(rect1);
