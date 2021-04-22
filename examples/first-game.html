@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My First Game</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="../lib/lib.js"></script>
+</head>
+<body>
+    <canvas id="gameScreen"></canvas>
+
+
+    <script>
+      let canvas=helium.Canvas(300,200,"gameScreen");
+      let game=helium.Game(canvas,60);
+      let camera=helium.Camera(0,0);
+
+      let player=helium.Rectangle(40,30,20,20,"#ff0000");
+      let movementScript=helium.Script(function (self) {
+      	if (game.pressedKeys.d) self.x++;
+        if (game.pressedKeys.a) self.x--;
+        if (game.pressedKeys.w) self.y--;
+        if (game.pressedKeys.s) self.y++;
+      });
+
+      player.addScript(movementScript)
+
+      game.addSprite(player);
+      game.setCamera(camera);
+
+      game.start();
+    </script>
+</body>
+</html>
