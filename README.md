@@ -1,5 +1,5 @@
 # HeliumJS
-HeliumJS is a JavaScript game engine for the web, it's object-oriented and easy to learn.  
+HeliumJS (not to be confused with the Helium Project) is a JavaScript game engine for the web, it's object-oriented and easy to learn.  
 ## Links
 [Wiki](https://github.com/CalSch/HeliumJS/wiki/)  
 [Docs](https://github.com/CalSch/HeliumJS/wiki/Docs)  
