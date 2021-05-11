@@ -14,10 +14,12 @@
 
     let spritesheet=helium.Spritesheet(imageData,2,2)
     let ani=helium.Animation(spritesheet,2,16,16)
+    let sadFace=helium.ImageFromSS(16,48,1,0,spritesheet);
 
     game.bgColor = "#e0e0ff";
     game.setCamera(camera)
     game.addSprite(ani);
+    game.addSprite(sadFace)
     game.start()
   </script>
 </body>
