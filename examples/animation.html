@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Animations Demo</title>
+    <script src="../lib/lib.js"></script>
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <script>
+    let game=helium.Game(helium.Canvas(300,200,"game"));
+    let camera=helium.Camera(0,0);
+    let imageData="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABW0lEQVR4nO3aWxLCIAxAUdbl/veFH6JFG9oQooF6OxO15emZ8nBsyinlyEj5FhuPl5jjhRDWAQAAAACAPoBcxXA+A4Br+wAwBAAAAIALAORGKEquDXD0ZXUIJwCeMGJdRoDepfAgx/kd4IXgDdCTt51fOQQ8xmgrwbIRsrQvl/sBgNdOUD+x9fSjYxK0dMBzK+y1Unxctf0WsDe4z6QB+N48ZFwGz5YedX0KgNFbX6qvOhvbB/RvPPYVaAA8D1eA4YOtMAAAAAAAAAAAENX+BhAYT4SoSPEd4PmACYZAVPsAAADAagC5iuF8BgDX9gFgCAAAAAATAmgmOaEqA+SkACWpCXME1vouMtDEACVZPG9dl9KkchvG5AAly9u79np9LgGUT9cFOBsq5YruCRGvkCrX/jusnSj7JsMF7oCDog7L58IATh0AAAAAAAAAAADC2gcAAADmAPjj5wPutUrC3ubZDyUAAAAASUVORK5CYII=";
+
+    let spritesheet=helium.Spritesheet(imageData,2,2)
+    let ani=helium.Animation(spritesheet,2,16,16)
+
+    game.bgColor = "#e0e0ff";
+    game.setCamera(camera)
+    game.addSprite(ani);
+    game.start()
+  </script>
+</body>
+</html>
